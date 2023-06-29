@@ -7,6 +7,7 @@ import {
   Quantity,
   Cart,
   Count,
+  Type,
 } from './styles'
 
 export interface CoffeeListArrayType {
@@ -23,11 +24,14 @@ interface CoffeeListArrayProps {
 }
 
 export function CoffeeCard({ item }: CoffeeListArrayProps) {
-  console.log(item.image)
   return (
     <CoffeeCardContainer>
       <img src={item.image} alt="Tipo de café" />
-      <span>{item.type[0]}</span>
+      <Type>
+        {item.type.map((type) => {
+          return <span key={type}>{type}</span>
+        })}
+      </Type>
       <h3>{item.name}</h3>
       <p>{item.description}</p>
       <PriceContainer>

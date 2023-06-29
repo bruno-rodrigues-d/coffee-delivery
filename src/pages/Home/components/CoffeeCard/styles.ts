@@ -20,20 +20,6 @@ export const CoffeeCardContainer = styled.div`
     margin-top: -3.25rem;
   }
 
-  > span {
-    padding: 0.25rem 0.5rem;
-    border-radius: 100px;
-
-    font-size: 0.625rem;
-    font-family: Roboto;
-    font-weight: 700;
-    line-height: 130%;
-    text-transform: uppercase;
-
-    background: ${(props) => props.theme['yellow-100']};
-    color: ${(props) => props.theme['yellow-700']};
-  }
-
   > h3 {
     color: ${(props) => props.theme['brown-700']};
 
@@ -53,6 +39,27 @@ export const CoffeeCardContainer = styled.div`
     line-height: 130%;
 
     padding: 0 1.25rem;
+  }
+`
+
+export const Type = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  > span {
+    padding: 0.25rem 0.5rem;
+    border-radius: 100px;
+
+    font-size: 0.625rem;
+    font-family: Roboto;
+    font-weight: 700;
+    line-height: 130%;
+    text-transform: uppercase;
+
+    background: ${(props) => props.theme['yellow-100']};
+    color: ${(props) => props.theme['yellow-700']};
   }
 `
 
