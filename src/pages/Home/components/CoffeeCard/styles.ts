@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const CoffeeCardContainer = styled.div`
-  background: ${(props) => props.theme['brown-300']};
+  background: ${(props) => props.theme['brown-200']};
   width: 16rem;
   height: 19.375rem;
 
