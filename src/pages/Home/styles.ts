@@ -4,5 +4,6 @@ export const HomeContainer = styled.main`
   width: 100%;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 `

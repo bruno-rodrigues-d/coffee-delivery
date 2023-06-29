@@ -23,7 +23,7 @@ export const LocationContainer = styled.div`
 
   background: ${(props) => props.theme['purple-100']};
 
-  padding: 0.5rem;
+  padding: 0.7rem 1rem 0.5rem;
 
   a {
     font-size: 0.875rem;
@@ -46,6 +46,10 @@ export const Location = styled.div`
 export const Cart = styled.div`
   background: ${(props) => props.theme['yellow-100']};
   color: ${(props) => props.theme['yellow-700']};
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   padding: 0.5rem;
 
