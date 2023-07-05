@@ -67,6 +67,11 @@ export const ButtonPayment = styled.button`
 
   border-radius: 0.375rem;
   background: ${(props) => props.theme['brown-400']};
+  cursor: pointer;
+
+  &:hover {
+    background: ${(props) => props.theme['brown-500']};
+  }
 
   span {
     color: ${(props) => props.theme['brown-700']};

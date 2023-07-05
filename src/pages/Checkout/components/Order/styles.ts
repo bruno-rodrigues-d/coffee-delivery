@@ -61,6 +61,11 @@ export const OrderButton = styled.button`
 
   border-radius: 0.375rem;
   background: ${(props) => props.theme['yellow-500']};
+  cursor: pointer;
+
+  &:hover {
+    background: ${(props) => props.theme['yellow-700']};
+  }
 
   span {
     color: ${(props) => props.theme.white};

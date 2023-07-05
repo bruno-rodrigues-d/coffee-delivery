@@ -112,10 +112,15 @@ export const Count = styled.div`
   border-radius: 6px;
 
   button {
+    cursor: pointer;
     color: ${(props) => props.theme['purple-500']};
     background: ${(props) => props.theme['brown-400']};
 
     border: 0;
+
+    &:hover {
+      color: ${(props) => props.theme['purple-700']};
+    }
   }
 
   span {
@@ -136,4 +141,8 @@ export const Cart = styled.div`
 
   padding: 0.5rem;
   border-radius: 6px;
+
+  &:hover {
+    background: ${(props) => props.theme['purple-500']};
+  }
 `

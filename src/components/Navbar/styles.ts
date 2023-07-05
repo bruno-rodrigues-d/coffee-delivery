@@ -46,6 +46,7 @@ export const Location = styled.div`
 export const Cart = styled.div`
   background: ${(props) => props.theme['yellow-100']};
   color: ${(props) => props.theme['yellow-700']};
+  cursor: pointer;
 
   display: flex;
   align-items: center;
@@ -54,4 +55,22 @@ export const Cart = styled.div`
   padding: 0.5rem;
 
   border-radius: 6px;
+  position: relative;
+
+  span {
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    top: -0.5rem;
+    right: -0.52156rem;
+    color: ${(props) => props.theme.white};
+    background: ${(props) => props.theme['yellow-500']};
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
 `

@@ -68,16 +68,25 @@ export const CoffeeSelectedCount = styled.div`
   background: ${(props) => props.theme['brown-400']};
 
   button {
+    cursor: pointer;
     border: 0;
     background: ${(props) => props.theme['brown-400']};
+
+    &:hover {
+      svg {
+        color: ${(props) => props.theme['purple-700']};
+      }
+    }
   }
 `
 
-export const CoffeeSelectedRemove = styled.div`
+export const CoffeeSelectedRemove = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  border: 0;
+  cursor: pointer;
 
   border-radius: 0.375rem;
   height: 2rem;
@@ -85,9 +94,11 @@ export const CoffeeSelectedRemove = styled.div`
 
   background: ${(props) => props.theme['brown-400']};
 
-  button {
-    border: 0;
-    background: ${(props) => props.theme['brown-400']};
+  border: 0;
+  background: ${(props) => props.theme['brown-400']};
+
+  &:hover {
+    background: ${(props) => props.theme['brown-500']};
   }
 
   span {

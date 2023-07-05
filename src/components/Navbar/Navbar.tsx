@@ -23,6 +23,7 @@ export function Navbar() {
 
         <NavLink to="/checkout" title="Checkout">
           <Cart>
+            <span>4</span>
             <ShoppingCart size={24} color="#C47F17" weight="fill" />
           </Cart>
         </NavLink>
