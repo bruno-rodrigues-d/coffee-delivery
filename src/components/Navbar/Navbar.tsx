@@ -2,8 +2,12 @@ import { NavbarContainer, Location, Cart, LocationContainer } from './styles'
 import logo from '../../assets/logo.svg'
 import { NavLink } from 'react-router-dom'
 import { ShoppingCart, MapPin } from 'phosphor-react'
+import { CartContext } from '../../contexts/CartContext'
+import { useContext } from 'react'
 
 export function Navbar() {
+  const { coffeeSelected } = useContext(CartContext)
+
   return (
     <NavbarContainer>
       <NavLink to="/" title="Home">
@@ -23,7 +27,7 @@ export function Navbar() {
 
         <NavLink to="/checkout" title="Checkout">
           <Cart>
-            <span>4</span>
+            {coffeeSelected.length > 0 && <span>{coffeeSelected.length}</span>}
             <ShoppingCart size={24} color="#C47F17" weight="fill" />
           </Cart>
         </NavLink>
