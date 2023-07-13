@@ -6,7 +6,7 @@ import { CartContext } from '../../contexts/CartContext'
 import { useContext } from 'react'
 
 export function Navbar() {
-  const { coffeeSelected } = useContext(CartContext)
+  const { items } = useContext(CartContext)
 
   return (
     <NavbarContainer>
@@ -27,7 +27,7 @@ export function Navbar() {
 
         <NavLink to="/checkout" title="Checkout">
           <Cart>
-            {coffeeSelected.length > 0 && <span>{coffeeSelected.length}</span>}
+            {items.length > 0 && <span>{items.length}</span>}
             <ShoppingCart size={24} color="#C47F17" weight="fill" />
           </Cart>
         </NavLink>

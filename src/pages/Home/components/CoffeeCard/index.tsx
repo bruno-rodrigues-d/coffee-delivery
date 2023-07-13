@@ -1,15 +1,15 @@
-import { Minus, Plus, ShoppingCart } from 'phosphor-react'
-import { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import { ShoppingCart } from 'phosphor-react'
+import { useContext, useRef } from 'react'
+import { CoffeeQuantity } from '../../../../components/CoffeeQuantity'
 import { CartContext } from '../../../../contexts/CartContext'
+import { priceFormatter } from '../../../../utils/Formatter'
 import {
   CoffeeCardContainer,
   PriceContainer,
   Price,
   Quantity,
-  Cart,
-  Count,
   Type,
+  AddToCartButton,
 } from './styles'
 
 export interface CoffeeListArrayType {
@@ -25,21 +25,17 @@ interface CoffeeListArrayProps {
   item: CoffeeListArrayType
 }
 
+interface CoffeeQuantityRef {
+  quantity: number
+}
+
 export function CoffeeCard({ item }: CoffeeListArrayProps) {
-  const { addCartItem, removeCartItem, coffeeSelected } =
-    useContext(CartContext)
+  const { addItemToCart } = useContext(CartContext)
+  const coffeeQuantityRef = useRef<CoffeeQuantityRef>(null)
 
-  function handleCoffeeAdded() {
-    addCartItem(item)
+  function handleAddToCart() {
+    addItemToCart(coffeeQuantityRef.current?.quantity ?? 1, item.id)
   }
-
-  function handleCoffeeSubtracted() {
-    removeCartItem(item)
-  }
-
-  const countItem = coffeeSelected
-
-  console.log(countItem.length)
 
   return (
     <CoffeeCardContainer>
@@ -53,25 +49,14 @@ export function CoffeeCard({ item }: CoffeeListArrayProps) {
       <p>{item.description}</p>
       <PriceContainer>
         <Price>
-          <p>R$</p>
-          <span>{item.price}</span>
+          <span>{priceFormatter.format(item.price)}</span>
         </Price>
 
         <Quantity>
-          <Count>
-            <button onClick={handleCoffeeSubtracted}>
-              <Minus size={16} />
-            </button>
-            <span>{countItem.length}</span>
-            <button onClick={handleCoffeeAdded}>
-              <Plus size={16} />
-            </button>
-          </Count>
-          <NavLink to="/checkout" title="Checkout">
-            <Cart>
-              <ShoppingCart size={24} color="#FFF" weight="fill" />
-            </Cart>
-          </NavLink>
+          <CoffeeQuantity ref={coffeeQuantityRef} />
+          <AddToCartButton type="button" onClick={handleAddToCart}>
+            <ShoppingCart size={24} color="#FFF" weight="fill" />
+          </AddToCartButton>
         </Quantity>
       </PriceContainer>
     </CoffeeCardContainer>

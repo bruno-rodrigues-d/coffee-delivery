@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useCallback, useMemo } from 'react'
+import { coffees } from '../data/coffees'
+import { useLocalStorageState } from '../hooks/useLocalStorageState'
 
 export interface CoffeeListArrayType {
   id: number
@@ -9,10 +11,21 @@ export interface CoffeeListArrayType {
   price: number
 }
 
+interface CartItem {
+  quantity: number
+  coffeeId: CoffeeListArrayType['id']
+}
+
+interface FullCartItem {
+  quantity: number
+  coffee: CoffeeListArrayType
+}
+
 interface CartContextType {
-  coffeeSelected: CoffeeListArrayType[]
-  addCartItem: (list: CoffeeListArrayType) => void
-  removeCartItem: (list: CoffeeListArrayType) => void
+  items: FullCartItem[]
+  addItemToCart: (quantity: number, coffeeId: CoffeeListArrayType['id']) => void
+  removeItemFromCart: (coffeeId: CoffeeListArrayType['id']) => void
+  clearCart: () => void
 }
 
 interface CartContextProviderProps {
@@ -22,26 +35,68 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [coffeeSelected, setCoffeeSelected] = useState<CoffeeListArrayType[]>(
+  const [items, setItems] = useLocalStorageState<CartItem[]>(
+    '@coffee-delivery:cart-0.1.0',
     [],
   )
 
-  function addCartItem(data: CoffeeListArrayType) {
-    setCoffeeSelected((state) => [data, ...state])
-  }
+  const addItemToCart: CartContextType['addItemToCart'] = useCallback(
+    (quantity, coffeeId) => {
+      if (coffees.findIndex((coffee) => coffee.id === coffeeId) < 0) {
+        throw new Error('ID inexistente')
+      }
 
-  function removeCartItem(data: CoffeeListArrayType) {
-    const newListItems = coffeeSelected.filter((item) => item.id !== data.id)
+      setItems((items) => {
+        const copy = [...items]
 
-    setCoffeeSelected(newListItems)
-  }
+        const existingItemIndex = copy.findIndex(
+          (item) => item.coffeeId === coffeeId,
+        )
+
+        if (existingItemIndex >= 0) {
+          copy[existingItemIndex].quantity = quantity
+        } else {
+          copy.push({
+            quantity,
+            coffeeId,
+          })
+        }
+
+        return copy
+      })
+    },
+    [setItems],
+  )
+
+  const removeItemFromCart: CartContextType['removeItemFromCart'] = useCallback(
+    (coffeeId) => {
+      setItems((items) => {
+        return items.filter((item) => item.coffeeId !== coffeeId)
+      })
+    },
+    [setItems],
+  )
+
+  const clearCart: CartContextType['clearCart'] = useCallback(() => {
+    setItems([])
+  }, [setItems])
+
+  const fullItems = useMemo((): FullCartItem[] => {
+    return items
+      .filter((item) => coffees.some((coffee) => coffee.id === item.coffeeId))
+      .map((item) => ({
+        quantity: item.quantity,
+        coffee: coffees.find((coffee) => coffee.id === item.coffeeId)!,
+      }))
+  }, [items])
 
   return (
     <CartContext.Provider
       value={{
-        coffeeSelected,
-        addCartItem,
-        removeCartItem,
+        items: fullItems,
+        addItemToCart,
+        removeItemFromCart,
+        clearCart,
       }}
     >
       {children}

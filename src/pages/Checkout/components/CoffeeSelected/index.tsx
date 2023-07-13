@@ -1,4 +1,4 @@
-import { Minus, Plus, Trash } from 'phosphor-react'
+import { Trash } from 'phosphor-react'
 import { CartContext } from '../../../../contexts/CartContext'
 import { useContext } from 'react'
 
@@ -7,47 +7,64 @@ import {
   CoffeeSelectedInfo,
   CoffeeSelectedDetails,
   CoffeeSelectedActions,
-  CoffeeSelectedCount,
   CoffeeSelectedRemove,
   Divider,
 } from './styles'
-export function CoffeeSelected() {
-  const { addCartItem, removeCartItem, coffeeSelected } =
-    useContext(CartContext)
+import { CoffeeQuantity } from '../../../../components/CoffeeQuantity'
+import { priceFormatter } from '../../../../utils/Formatter'
 
-  console.log(coffeeSelected)
+export interface CoffeeListArrayType {
+  id: number
+  image: string
+  type: string[]
+  name: string
+  description: string
+  price: number
+}
+
+interface CartItemProps {
+  quantity: number
+  coffee: CoffeeListArrayType
+}
+
+export function CoffeeSelected({ quantity, coffee }: CartItemProps) {
+  const { addItemToCart, removeItemFromCart } = useContext(CartContext)
+
+  function handleIncrement(quantity: number) {
+    addItemToCart(quantity, coffee.id)
+  }
+
+  function handleDecrement(quantity: number) {
+    addItemToCart(quantity, coffee.id)
+  }
+
+  function handleDeleteItem() {
+    removeItemFromCart(coffee.id)
+  }
+
   return (
     <>
-      {coffeeSelected.map((item) => {
-        return (
-          <CoffeeSelectedContainer key={item.id}>
-            <CoffeeSelectedInfo>
-              <img src={item.image} alt="" />
-              <CoffeeSelectedDetails>
-                <span>{item.name}</span>
-                <CoffeeSelectedActions>
-                  <CoffeeSelectedCount>
-                    <button>
-                      <Minus size={16} color="#8047F8" />
-                    </button>
-                    <span>1</span>
-                    <button>
-                      <Plus size={16} color="#8047F8" />
-                    </button>
-                  </CoffeeSelectedCount>
-                  <CoffeeSelectedRemove>
-                    <Trash size={16} color="#8047F8" />
-                    <span>remover</span>
-                  </CoffeeSelectedRemove>
-                </CoffeeSelectedActions>
-              </CoffeeSelectedDetails>
-            </CoffeeSelectedInfo>
+      <CoffeeSelectedContainer key={coffee.id}>
+        <CoffeeSelectedInfo>
+          <img src={coffee.image} alt="" />
+          <CoffeeSelectedDetails>
+            <span>{coffee.name}</span>
+            <CoffeeSelectedActions>
+              <CoffeeQuantity
+                initialQuantity={quantity}
+                onIncrement={handleIncrement}
+                onDecrement={handleDecrement}
+              />
+              <CoffeeSelectedRemove onClick={handleDeleteItem}>
+                <Trash size={16} color="#8047F8" />
+                <span>remover</span>
+              </CoffeeSelectedRemove>
+            </CoffeeSelectedActions>
+          </CoffeeSelectedDetails>
+        </CoffeeSelectedInfo>
 
-            <span>{item.price}</span>
-          </CoffeeSelectedContainer>
-        )
-      })}
-
+        <span>{priceFormatter.format(coffee.price)}</span>
+      </CoffeeSelectedContainer>
       <Divider />
     </>
   )

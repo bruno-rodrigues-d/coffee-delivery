@@ -132,15 +132,20 @@ export const Count = styled.div`
   }
 `
 
-export const Cart = styled.div`
-  background: ${(props) => props.theme['purple-700']};
+export const AddToCartButton = styled.button`
+  aspect-ratio: 1 / 1;
+  width: 2.375rem;
+  border-radius: 6px;
+  padding: 0.5rem;
+  border: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 0.5rem;
-  border-radius: 6px;
+  background: ${(props) => props.theme['purple-700']};
+
+  transition: background-color 0.2s linear;
 
   &:hover {
     background: ${(props) => props.theme['purple-500']};
