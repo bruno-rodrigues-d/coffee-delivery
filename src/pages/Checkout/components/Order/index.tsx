@@ -1,6 +1,5 @@
 import { Fragment, useContext, useMemo } from 'react'
 import { CartContext } from '../../../../contexts/CartContext'
-import { priceFormatter } from '../../../../utils/Formatter'
 import { CoffeeSelected } from '../CoffeeSelected'
 import { OrderContainer, OrderButton, OrderInfo, OrderText } from './styles'
 
@@ -28,17 +27,30 @@ export function Order() {
         <OrderInfo>
           <OrderText>
             <span>Total de itens</span>
-            <span>{priceFormatter.format(itemsTotal)}</span>
+            <span>
+              {new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(itemsTotal)}
+            </span>
           </OrderText>
           <OrderText>
             <span>Entrega</span>
-            <span>{priceFormatter.format(deliveryFee)}</span>
+            <span>
+              {new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(deliveryFee)}
+            </span>
           </OrderText>
           <OrderText>
             <p>Total</p>
             <p>
               {items.length > 0
-                ? priceFormatter.format(itemsTotal + deliveryFee)
+                ? new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(itemsTotal + deliveryFee)
                 : `R$ 0,00`}
             </p>
           </OrderText>

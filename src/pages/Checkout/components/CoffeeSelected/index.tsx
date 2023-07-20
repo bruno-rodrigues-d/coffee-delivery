@@ -11,7 +11,6 @@ import {
   Divider,
 } from './styles'
 import { CoffeeQuantity } from '../../../../components/CoffeeQuantity'
-import { priceFormatter } from '../../../../utils/Formatter'
 
 export interface CoffeeListArrayType {
   id: number
@@ -63,7 +62,12 @@ export function CoffeeSelected({ quantity, coffee }: CartItemProps) {
           </CoffeeSelectedDetails>
         </CoffeeSelectedInfo>
 
-        <span>{priceFormatter.format(coffee.price)}</span>
+        <span>
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(coffee.price)}
+        </span>
       </CoffeeSelectedContainer>
       <Divider />
     </>

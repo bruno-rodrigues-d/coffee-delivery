@@ -2,7 +2,6 @@ import { ShoppingCart } from 'phosphor-react'
 import { useContext, useRef } from 'react'
 import { CoffeeQuantity } from '../../../../components/CoffeeQuantity'
 import { CartContext } from '../../../../contexts/CartContext'
-import { priceFormatter } from '../../../../utils/Formatter'
 import {
   CoffeeCardContainer,
   PriceContainer,
@@ -49,7 +48,12 @@ export function CoffeeCard({ item }: CoffeeListArrayProps) {
       <p>{item.description}</p>
       <PriceContainer>
         <Price>
-          <span>{priceFormatter.format(item.price)}</span>
+          <span>
+            {new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(item.price)}
+          </span>
         </Price>
 
         <Quantity>
