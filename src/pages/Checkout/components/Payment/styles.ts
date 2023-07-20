@@ -1,4 +1,5 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { IconButton } from '../../../../components/IconButton'
 
 export const PaymentContainer = styled.main`
   display: flex;
@@ -55,7 +56,7 @@ export const ButtonContainer = styled.div`
   width: 100%;
 `
 
-export const ButtonPayment = styled.button`
+export const ButtonPayment = styled.input`
   border: 0;
   width: 100%;
 
@@ -83,4 +84,22 @@ export const ButtonPayment = styled.button`
     line-height: 160%;
     text-transform: uppercase;
   }
+`
+
+interface PaymentMethodButtonProps {
+  selected?: boolean
+}
+
+export const PaymentMethodButton = styled(IconButton)<PaymentMethodButtonProps>`
+  ${({ selected }) => {
+    if (selected) {
+      return css`
+      border: 0;
+      background: ${(props) => props.theme['brown-500']}; !important;
+      outline: 1px solid ${(props) => props.theme['purple-700']};
+      `
+    }
+
+    return ''
+  }}
 `

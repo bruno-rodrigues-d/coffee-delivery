@@ -1,13 +1,19 @@
 import { CurrencyDollarSimple, CreditCard, Bank, Money } from 'phosphor-react'
+import { PaymentMethod } from '../..'
 import {
   Head,
   PaymentContainer,
   Text,
   ButtonContainer,
-  ButtonPayment,
+  PaymentMethodButton,
 } from './styles'
 
-export function Payment() {
+interface PaymentProps {
+  paymentMethod: PaymentMethod | undefined
+  setPaymentMethod: any
+}
+
+export function Payment({ paymentMethod, setPaymentMethod }: PaymentProps) {
   return (
     <PaymentContainer>
       <Head>
@@ -20,18 +26,29 @@ export function Payment() {
         </Text>
       </Head>
       <ButtonContainer>
-        <ButtonPayment>
-          <CreditCard size={16} color="#8047F8" />
-          <span>cartão de crédito</span>
-        </ButtonPayment>
-        <ButtonPayment>
-          <Bank size={16} color="#8047F8" />
-          <span>cartão de débito</span>
-        </ButtonPayment>
-        <ButtonPayment>
-          <Money size={16} color="#8047F8" />
-          <span>dinheiro</span>
-        </ButtonPayment>
+        <PaymentMethodButton
+          type="button"
+          icon={CreditCard}
+          title="CARTÃO DE CRÉDITO"
+          onClick={() => setPaymentMethod('credit')}
+          selected={paymentMethod === 'credit'}
+        />
+
+        <PaymentMethodButton
+          type="button"
+          icon={Bank}
+          title="CARTÃO DE DÉBITO"
+          onClick={() => setPaymentMethod('debit')}
+          selected={paymentMethod === 'debit'}
+        />
+
+        <PaymentMethodButton
+          type="button"
+          icon={Money}
+          title="DINHEIRO"
+          onClick={() => setPaymentMethod('cash')}
+          selected={paymentMethod === 'cash'}
+        />
       </ButtonContainer>
     </PaymentContainer>
   )

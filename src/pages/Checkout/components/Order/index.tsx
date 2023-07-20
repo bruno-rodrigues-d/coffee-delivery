@@ -24,24 +24,30 @@ export function Order() {
         </Fragment>
       ))}
 
-      <OrderInfo>
-        <OrderText>
-          <span>Total de itens</span>
-          <span>{priceFormatter.format(itemsTotal)}</span>
-        </OrderText>
-        <OrderText>
-          <span>Entrega</span>
-          <span>{priceFormatter.format(deliveryFee)}</span>
-        </OrderText>
-        <OrderText>
-          <p>Total</p>
-          <p>{priceFormatter.format(itemsTotal + deliveryFee)}</p>
-        </OrderText>
-      </OrderInfo>
+      <Fragment>
+        <OrderInfo>
+          <OrderText>
+            <span>Total de itens</span>
+            <span>{priceFormatter.format(itemsTotal)}</span>
+          </OrderText>
+          <OrderText>
+            <span>Entrega</span>
+            <span>{priceFormatter.format(deliveryFee)}</span>
+          </OrderText>
+          <OrderText>
+            <p>Total</p>
+            <p>
+              {items.length > 0
+                ? priceFormatter.format(itemsTotal + deliveryFee)
+                : `R$ 0,00`}
+            </p>
+          </OrderText>
+        </OrderInfo>
 
-      <OrderButton>
-        <span>Confirmar Pedido</span>
-      </OrderButton>
+        <OrderButton type="submit">
+          <span>Confirmar Pedido</span>
+        </OrderButton>
+      </Fragment>
     </OrderContainer>
   )
 }

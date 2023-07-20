@@ -1,5 +1,6 @@
 import { MapPinLine } from 'phosphor-react'
-import { FormProvider } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
+
 import {
   FormsContainer,
   Head,
@@ -9,8 +10,11 @@ import {
   InputHalf,
   InputMore,
 } from './styles'
+import { CheckoutFormValues } from '../..'
 
 export function FormsDelivery() {
+  const { register } = useFormContext<CheckoutFormValues>()
+
   return (
     <FormsContainer>
       <Head>
@@ -20,23 +24,39 @@ export function FormsDelivery() {
           <p>Informe o endereço onde deseja receber seu pedido</p>
         </Text>
       </Head>
-      <form action="">
-        <FormProvider>
-          <FormInfo>
-            <InputHalf type="text" placeholder="CEP" />
-            <InputFull type="text" placeholder="Rua" />
-            <InputMore>
-              <InputHalf type="text" placeholder="Número" />
-              <InputFull type="text" placeholder="Complemento" />
-            </InputMore>
-            <InputMore>
-              <InputFull type="text" placeholder="Bairro" />
-              <InputFull type="text" placeholder="Cidade" />
-              <InputHalf type="text" placeholder="UF" />
-            </InputMore>
-          </FormInfo>
-        </FormProvider>
-      </form>
+      <div>
+        <FormInfo>
+          <InputHalf type="text" placeholder="CEP" {...register('zipcode')} />
+          <InputFull type="text" placeholder="Rua" {...register('street')} />
+          <InputMore>
+            <InputHalf
+              type="text"
+              placeholder="Número"
+              {...register('number')}
+            />
+            <InputFull
+              type="text"
+              placeholder="Complemento"
+              {...register('complement')}
+            />
+          </InputMore>
+          <InputMore>
+            <InputFull
+              type="text"
+              placeholder="Bairro"
+              {...register('neighbourhood')}
+            />
+            <InputFull type="text" placeholder="Cidade" {...register('city')} />
+            <InputHalf
+              type="text"
+              placeholder="UF"
+              minLength={2}
+              maxLength={2}
+              {...register('state')}
+            />
+          </InputMore>
+        </FormInfo>
+      </div>
     </FormsContainer>
   )
 }
