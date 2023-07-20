@@ -1,4 +1,6 @@
 import { MapPin, Timer, CurrencyDollar } from 'phosphor-react'
+import { CheckoutFormValues, PaymentMethod } from '../Checkout'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   SuccessContainer,
   SuccessContent,
@@ -7,8 +9,29 @@ import {
   SuccessTime,
   SuccessPayment,
 } from './styles'
+import { useEffect } from 'react'
+
+interface SuccessPageLocationState {
+  address: CheckoutFormValues
+  paymentMethod: PaymentMethod
+}
 
 export function Success() {
+  const { state } = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!state) {
+      navigate('/')
+    }
+  }, [navigate, state])
+
+  if (!state) {
+    return null
+  }
+
+  const { address, paymentMethod } = state as SuccessPageLocationState
+
   return (
     <>
       <SuccessContainer>
@@ -21,9 +44,14 @@ export function Success() {
               <MapPin size={32} color="#FFF" weight="fill" />
               <div>
                 <span>
-                  Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                  Entrega em{' '}
+                  <strong>
+                    {address.street}, {address.number}
+                  </strong>
                 </span>
-                <p>Farrapos - Porto Alegre, RS</p>
+                <p>
+                  {address.neighbourhood} - {address.city}, {address.state}
+                </p>
               </div>
             </SuccessLocal>
             <SuccessTime>
@@ -40,7 +68,11 @@ export function Success() {
               <div>
                 <span>Pagamento na entrega</span>
                 <p>
-                  <strong>Cartão de Crédito</strong>
+                  <strong>
+                    {paymentMethod === 'credit' && 'Cartão de Crédito'}
+                    {paymentMethod === 'debit' && 'Cartão de Débito'}
+                    {paymentMethod === 'cash' && 'Dinheiro'}
+                  </strong>
                 </p>
               </div>
             </SuccessPayment>

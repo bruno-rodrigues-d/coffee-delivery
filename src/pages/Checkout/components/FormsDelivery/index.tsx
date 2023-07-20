@@ -26,12 +26,23 @@ export function FormsDelivery() {
       </Head>
       <div>
         <FormInfo>
-          <InputHalf type="text" placeholder="CEP" {...register('zipcode')} />
-          <InputFull type="text" placeholder="Rua" {...register('street')} />
+          <InputHalf
+            type="text"
+            placeholder="CEP"
+            required
+            {...register('zipcode')}
+          />
+          <InputFull
+            type="text"
+            placeholder="Rua"
+            required
+            {...register('street')}
+          />
           <InputMore>
             <InputHalf
               type="text"
               placeholder="Número"
+              required
               {...register('number')}
             />
             <InputFull
@@ -44,6 +55,7 @@ export function FormsDelivery() {
             <InputFull
               type="text"
               placeholder="Bairro"
+              required
               {...register('neighbourhood')}
             />
             <InputFull type="text" placeholder="Cidade" {...register('city')} />
@@ -52,6 +64,7 @@ export function FormsDelivery() {
               placeholder="UF"
               minLength={2}
               maxLength={2}
+              required
               {...register('state')}
             />
           </InputMore>

@@ -16,10 +16,10 @@ interface CoffeeQuantityProps {
   onDecrement?: (quantity: number) => void
 }
 
-export const CoffeeQuantity = forwardRef<
-  CoffeeQuantityRef,
-  CoffeeQuantityProps
->(({ initialQuantity = 1, onIncrement, onDecrement }, ref) => {
+const Coffee = (
+  { initialQuantity = 1, onIncrement, onDecrement }: CoffeeQuantityProps,
+  ref: any,
+) => {
   const [quantity, setQuantity] = useState(initialQuantity)
 
   useImperativeHandle(ref, () => ({ quantity }), [quantity])
@@ -70,4 +70,9 @@ export const CoffeeQuantity = forwardRef<
       </QuantityButton>
     </CoffeeQuantityContainer>
   )
-})
+}
+
+export const CoffeeQuantity = forwardRef<
+  CoffeeQuantityRef,
+  CoffeeQuantityProps
+>(Coffee)
